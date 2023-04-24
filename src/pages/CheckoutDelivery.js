@@ -143,8 +143,8 @@ function CheckoutDelivery (props) {
                         <p><strong>Total</strong></p>
                         <p><strong>${subTotal + testParks[0]['tax_rate'] + testParks[0]['ship_cost']}</strong></p>
                     </div>
-                    <p className="text-primary text-center" onClick={()=>navigator(-1)}>Back to Packages</p>
                 </div>
+                <p className="text-primary text-center" onClick={()=>navigator(-1)}>Back to Packages</p>
                 <div>
                     <Button variant="primary" className="col-12 fs-1 mt-5 mb-3 text-white" onClick={checkOut}>Pay Now</Button>
                 </div>

@@ -58,7 +58,7 @@ function Payment(props) {
                 taxLineItems: [
                     {
                         label: "Tax",
-                        amount: packageObj?.tax_rate,
+                        amount: '' + packageObj?.tax_rate,
                         pending: false
                     }
                 ],
@@ -85,7 +85,7 @@ function Payment(props) {
                 // ],
                 // pending is only required if it's true.
                 total: {
-                    amount: packageObj?.total_cost,
+                    amount: '' + packageObj?.total_cost,
                     label: "Total",
                 },
             })}
@@ -96,9 +96,10 @@ function Payment(props) {
             locationId={Config.locationId}
         >
             <ApplePay />
-            <GooglePay />
-            <CreditCard>
-                <Button variant="primary" size="lg">Pay ${packageObj?.total_cost}</Button>
+            <GooglePay className='mt-5' />
+            <CreditCard className='mt-3'>
+                <div className='fs-2'>Pay ${packageObj?.total_cost}</div>
+                {/* <Button variant="primary" size="lg">Pay ${packageObj?.total_cost}</Button> */}
             </CreditCard>
         </PaymentForm>
     )
