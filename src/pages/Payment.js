@@ -31,7 +31,7 @@ function Payment(props) {
              * the chance of fraudulent transactions.
              */
             createVerificationDetails={() => ({
-                amount: packageObj?.total_cost,
+                amount: '' + packageObj?.total_cost,
                 /* collected from the buyer */
                 billingContact: {
                     addressLines: ['123 Main Street', 'Apartment 1'],
