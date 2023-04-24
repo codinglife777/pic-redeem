@@ -1,11 +1,12 @@
 import * as React from 'react';
 import { ApplePay, GooglePay, CreditCard, PaymentForm} from 'react-square-web-payments-sdk';
-import { Button } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import Config from '../config/config';
 
 function Payment(props) {
 
     const packageObj = JSON.parse(sessionStorage.getItem('package'));
+    const navigator = useNavigate();
 
     return (
 
@@ -21,6 +22,7 @@ function Payment(props) {
              */
             cardTokenizeResponseReceived={(token, buyer) => {
                 console.info({ token, buyer });
+                navigator('/success');
             }}
             /**
              * This function enable the Strong Customer Authentication (SCA) flow

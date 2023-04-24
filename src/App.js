@@ -9,6 +9,8 @@ import RedeemConfirmation from './pages/RedeemConfirmation';
 import PackageList from './pages/PackageList';
 import CheckoutDelivery from './pages/CheckoutDelivery';
 import Payment from './pages/Payment';
+import EnterCode from './pages/EnterCode';
+import Success from './pages/Success';
 
 function App() {
   return (
@@ -23,7 +25,8 @@ function App() {
           <Route path="/redeem-confirm" element={<RedeemConfirmation />}/>
           <Route path="/package-list" element={<PackageList />}/>
           <Route path="/checkout-delivery" element={<CheckoutDelivery />}/>
-          <Route path="/pay" element={<Payment />}/>
+          <Route path="/enter-code" element={<EnterCode />}/>
+          <Route path="/success" element={<Success />}/>
         </Routes>
       </BrowserRouter>
     </ImageProvider>

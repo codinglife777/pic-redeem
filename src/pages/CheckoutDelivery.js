@@ -37,12 +37,13 @@ function CheckoutDelivery (props) {
         
         const packageObj = {};
         packageObj['checkedout_package'] = checkedOutPackage;
-        packageObj['delivery_method'] = [pickUp ? 'pick' : '', shipTo ? 'Ship' : ''];
+        packageObj['delivery_method'] = pickUp ? 'pickup' : 'ship';
         packageObj['ship_info'] = shipInfo;
         packageObj['shipping'] = testParks[0]['ship_cost'];
         packageObj['total_cost'] = subTotal + testParks[0]['tax_rate'] + testParks[0]['ship_cost'];
         packageObj['tax_rate'] = testParks[0]['tax_rate'];
-
+        packageObj['pickup_detail'] = testParks[0]['pickup_detail'];
+        packageObj['ship_detail'] = testParks[0]['ship_detail'];
 
         sessionStorage.setItem('package', JSON.stringify(packageObj));
         setShowModal(true);
@@ -58,20 +59,23 @@ function CheckoutDelivery (props) {
             <div className="d-flex flex-column vh-100">
                 <div className="d-flex flex-row justify-content-between align-items-center">
                     <div className="fs-2 pe-3"><strong>CHECKOUT</strong></div>
-                    <img className="img-thumbnail overflow-hidden" style={{maxHeight:"100px"}} src='https://mdbootstrap.com/img/new/slides/041.webp' alt='...' />
+                    <img className="img-thumbnail overflow-hidden" style={{maxHeight:"100px"}} src={imgInfo?.imgUrl} alt='...' />
                 </div>
                 <hr />
-                <div className="main-container flex-1" style={{overflow:"scroll"}}>
+                <div className="main-container flex-1 p-3" style={{overflow:"scroll"}}>
                     <p className="fs-4  "><strong>Delivery Options</strong></p>
                     <div className="d-flex flex-row justify-content-between align-items-center">
-                        {pickUp ? (<><p>I'll pick them up in park</p>
-                        <input type="checkbox" onChange={()=>setPickUp(!pickUp)} checked/></>) : (<><p className="text-secondary">I'll pick them up in park</p>
-                        <input type="checkbox" onChange={()=>setPickUp(!pickUp)} /></>)}
+                        {<>
+                            <p className={pickUp?"":"text-secondary"}>I'll pick them up in park</p>
+                            <input type="checkbox" onChange={()=>{setPickUp(!pickUp);setShipTo(pickUp)}} checked={pickUp}/>
+                        </>
+                        }
                     </div>
                     <div className="d-flex flex-row justify-content-between align-items-center">
-                        {shipTo ? (<><p>Ship it to me</p>
-                        <input type="checkbox" checked onChange={()=>setShipTo(!shipTo)}/></>) : (<><p className="text-secondary">Ship it to me</p>
-                        <input type="checkbox" onChange={()=>setShipTo(!shipTo)} /></>)}
+                        {<>
+                            <p className={shipTo?"":"text-secondary"}>Ship it to me</p>
+                            <input type="checkbox" checked={shipTo} onChange={()=>{setShipTo(!shipTo);setPickUp(shipTo);}}/>
+                        </>}
                     </div>
                     {shipTo && <Form>
                         <Form.Group as={Row} controlId="formName" className="mb-3">

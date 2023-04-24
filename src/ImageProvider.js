@@ -3,7 +3,7 @@ import React, {useState} from 'react';
 const ImageContext = React.createContext();
 
 function ImageProvider(props) {
-  const [imgInfo, setImgInfo] = useState({ rideId: '',watermark:'',passId:'' });
+  const [imgInfo, setImgInfo] = useState({ rideId: '', watermark:'', passId:'', imgUrl:'' });
 
   const updateImgInfo = (newInfo) => {
     setImgInfo(newInfo);

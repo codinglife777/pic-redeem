@@ -44,6 +44,7 @@ const testParks = [
       "ship_detail": "Your print will be mailed to the address provided.  Any questions please email help@nxtcapture.com"
     }
   ];
+  const testRetrieveUrl = "https://10mlsgzyb8.execute-api.us-east-1.amazonaws.com/dev/?bucket=nxdv&key=rocket-coaster/04-10-2023/edited/img00002.jpg";
 
-  export {testParks};
+  export { testParks, testRetrieveUrl };
   
