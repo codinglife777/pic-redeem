@@ -5,13 +5,13 @@ import { CSSTransition } from 'react-transition-group';
 import { GrFormClose } from "react-icons/gr";
 
 import { ImageContext } from "../ImageProvider";
-import PackageItem from "../components/PackageItem";
 import { testParks } from "../utils/test_data";
 import '../css/Modal.css';
 import Payment from "./Payment";
+import WATERMAK_IMAGES from "../images";
 
 function CheckoutDelivery (props) {
-    const {imgInfo, updateImgInfo} = useContext(ImageContext);
+    const {imgInfo} = useContext(ImageContext);
     const [pickUp, setPickUp] = useState(true);
     const [shipTo, setShipTo] = useState(false);
     const [shipInfo, setShipInfo] = useState({
@@ -59,7 +59,10 @@ function CheckoutDelivery (props) {
             <div className="d-flex flex-column vh-100">
                 <div className="d-flex flex-row justify-content-between align-items-center">
                     <div className="fs-2 pe-3"><strong>CHECKOUT</strong></div>
-                    <img className="img-thumbnail overflow-hidden" style={{maxHeight:"100px"}} src={imgInfo?.imgUrl} alt='...' />
+                    <div style={{width:"40vw",height:"24vw"}}>
+                        <img className="img-thumbnail overflow-hidden position-fixed" style={{maxHeight:"100px",top:"3px",right:"5px",background:"none"}} src={imgInfo?.imgUrl} alt='...' />
+                        <img className="img-thumbnail overflow-hidden position-fixed" style={{maxHeight:"100px",top:"3px",right:"5px",background:"none"}} src={WATERMAK_IMAGES[testParks[0]['rides'][0]['watermark']]} alt='...' />
+                    </div>
                 </div>
                 <hr />
                 <div className="main-container flex-1 p-3" style={{overflow:"scroll"}}>

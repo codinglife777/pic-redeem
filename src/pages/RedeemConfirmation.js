@@ -5,14 +5,15 @@ import { GiCheckMark } from "react-icons/gi";
 import { GrFormClose } from "react-icons/gr";
 import { Container, Row, Button, Card } from "react-bootstrap";
 import { CSSTransition } from 'react-transition-group';
+import WATERMAK_IMAGES from "../images";
+import { testParks } from "../utils/test_data";
 
 import '../css/Modal.css';
-import { downloadImage } from "../utils/utils";
 
 function RedeemConfirmation (props) {
 
-    const [showModal, setShowModal] = useState(false);
-    const {imgInfo, updateImgInfo} = useContext(ImageContext);
+    const [ showModal, setShowModal ] = useState(false);
+    const { imgInfo } = useContext(ImageContext);
     const downloadRef = useRef(null);
 
     console.log(imgInfo);
@@ -56,7 +57,16 @@ function RedeemConfirmation (props) {
                             <label onClick={handleCloseModal} className="text-red"><GrFormClose size={30} color="red" style={{position:"fixed", right:"30px"}} /></label>
                             <Card className="image-card mt-4">
                                 <Card.Title className="text-center p-3">Would you like to view special print offerings available only today?</Card.Title>
+                                {imgInfo?.watermark ?
+                                    <div style={{height:"65vw"}}>
+                                        <Card.Img variant="top" className="p-2 position-fixed" style={{width:"82%"}} src={imgInfo?.imgUrl} alt={props.imageAlt} />
+                                        <Card.Img variant="top" className="p-2 position-fixed" style={{width:"82%"}} src={WATERMAK_IMAGES[testParks[0]['rides'][0]['watermark']]} alt={props.imageAlt} />
+                                    </div>
+                                : 
                                 <Card.Img variant="top" className="p-2" src={imgInfo?.imgUrl} alt={props.imageAlt} />
+                                }
+                                
+                                {/* <Card.Img variant="top" className="p-2" src={imgInfo?.imgUrl} alt={props.imageAlt} /> */}
                                 <Card.Body>
                                     <div className="button-container d-flex justify-content-between mt-2 p-3">
                                         <Button variant="primary" className="mr-2 btn-lg" onClick={()=>{

@@ -4,9 +4,10 @@ import { Container, Card, ListGroup, ListGroupItem, Button} from "react-bootstra
 import { useNavigate } from 'react-router-dom';
 import PackageItem from "../components/PackageItem";
 import { testParks } from "../utils/test_data";
+import WATERMAK_IMAGES from "../images";
 
 function PackageList (props) {
-    const {imgInfo, updateImgInfo} = useContext(ImageContext);
+    const {imgInfo} = useContext(ImageContext);
     const [checkBtnState, setCheckBtnState] = useState(true);
     const navigator = useNavigate();
 
@@ -25,17 +26,22 @@ function PackageList (props) {
     
 
     function checkOut() {
-        const checkedOutPackage = sessionStorage.getItem('checkout-package');
-        console.log(checkedOutPackage);
         navigator('/checkout-delivery');
     }
-    console.log("Checkbtnstate: ", checkBtnState);
+
     return (
        <Container className="">
             <div className="d-flex flex-column vh-100">
                 <Card className="image-card">
                     <Card.Title className="text-center p-3 fs-1">Packages</Card.Title>
-                    <Card.Img variant="top" className="p-2" src={imgInfo?.imgUrl} alt={props.imageAlt} />
+                    {imgInfo?.watermark ?
+                        <div style={{height:"70vw"}}>
+                            <Card.Img variant="top" className="p-2 position-fixed" style={{width:"93%"}} src={imgInfo?.imgUrl} alt={props.imageAlt} />
+                            <Card.Img variant="top" className="p-2 position-fixed" style={{width:"93%"}} src={WATERMAK_IMAGES[testParks[0]['rides'][0]['watermark']]} alt={props.imageAlt} />
+                        </div>
+                    : 
+                        <Card.Img variant="top" className="p-2" src={imgInfo?.imgUrl} alt={props.imageAlt} />
+                    }
                 </Card>
                 <div className="list-container flex-1" style={{overflow:"scroll"}}>
                     <ListGroup>
