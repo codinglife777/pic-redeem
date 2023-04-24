@@ -1,9 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
-import { ImageContext } from "../ImageProvider";
-import { Container, Form, Button, Row, Col} from "react-bootstrap";
+import { Container, Form, Button, Row, Col, Card} from "react-bootstrap";
 import { useNavigate } from 'react-router-dom';
+import { CSSTransition } from 'react-transition-group';
+import { GrFormClose } from "react-icons/gr";
+
+import { ImageContext } from "../ImageProvider";
 import PackageItem from "../components/PackageItem";
 import { testParks } from "../utils/test_data";
+import '../css/Modal.css';
+import Payment from "./Payment";
 
 function CheckoutDelivery (props) {
     const {imgInfo, updateImgInfo} = useContext(ImageContext);
@@ -16,18 +21,31 @@ function CheckoutDelivery (props) {
         city: "",
         zipCode: ""
     });
+    const [showModal, setShowModal] = useState(false);
     const navigator = useNavigate();
-
+    
     useEffect(() => {
         
     }, [])
     
+    const handleCloseModal = () => {
+        setShowModal(false);
+    };
 
     function checkOut() {
-        const checkedOutPackage = sessionStorage.getItem('checkout-package');
-        console.log(checkedOutPackage);
+        const checkedOutPackage = JSON.parse(sessionStorage.getItem('checkout-package'));
+        
+        const packageObj = {};
+        packageObj['checkedout_package'] = checkedOutPackage;
+        packageObj['delivery_method'] = [pickUp ? 'pick' : '', shipTo ? 'Ship' : ''];
+        packageObj['ship_info'] = shipInfo;
+        packageObj['shipping'] = testParks[0]['ship_cost'];
+        packageObj['total_cost'] = subTotal + testParks[0]['tax_rate'] + testParks[0]['ship_cost'];
+        packageObj['tax_rate'] = testParks[0]['tax_rate'];
 
-        navigator('/pay');
+
+        sessionStorage.setItem('package', JSON.stringify(packageObj));
+        setShowModal(true);
     }
 
     const checkedOutPackage = JSON.parse(sessionStorage.getItem('checkout-package'));
@@ -131,6 +149,20 @@ function CheckoutDelivery (props) {
                     <Button variant="primary" className="col-12 fs-1 mt-5 mb-3 text-white" onClick={checkOut}>Pay Now</Button>
                 </div>
             </div>
+            <CSSTransition
+                    in={showModal}
+                    timeout={500}
+                    classNames="modal"
+                    unmountOnExit
+                >
+                    <div className="modal">
+                        <div className="modal-cover" onClick={handleCloseModal} />
+                        <div className="modal-content">
+                            <label onClick={handleCloseModal} className="text-red" style={{position:"fixed", right:"20px",zIndex:"99"}}><GrFormClose size={30} color="red"  /></label>
+                            <Payment />
+                        </div>
+                    </div>
+                </CSSTransition>
        </Container>
     )
 }

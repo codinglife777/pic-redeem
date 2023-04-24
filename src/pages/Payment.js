@@ -1,7 +1,11 @@
 import * as React from 'react';
-import { ApplePay, GooglePay, CreditCard, PaymentForm } from 'react-square-web-payments-sdk';
+import { ApplePay, GooglePay, CreditCard, PaymentForm} from 'react-square-web-payments-sdk';
+import { Button } from 'react-bootstrap';
+import Config from '../config/config';
 
 function Payment(props) {
+
+    const packageObj = JSON.parse(sessionStorage.getItem('package'));
 
     return (
 
@@ -10,7 +14,7 @@ function Payment(props) {
              * Identifies the calling form with a verified application ID generated from
              * the Square Application Dashboard.
              */
-            applicationId="sandbox-sq0idb--3Zp1gcWGAadrJdat6mH6w"
+            applicationId={Config.applicationId}
             /**
              * Invoked when payment form receives the result of a tokenize generation
              * request. The result will be a valid credit card or wallet token, or an error.
@@ -25,7 +29,7 @@ function Payment(props) {
              * the chance of fraudulent transactions.
              */
             createVerificationDetails={() => ({
-                amount: '1.00',
+                amount: packageObj?.total_cost,
                 /* collected from the buyer */
                 billingContact: {
                     addressLines: ['123 Main Street', 'Apartment 1'],
@@ -41,47 +45,47 @@ function Payment(props) {
             createPaymentRequest={() => ({
                 countryCode: "US",
                 currencyCode: "USD",
-                lineItems: [
-                    {
-                        amount: "22.15",
-                        label: "Item to be purchased",
-                        id: "SKU-12345",
-                        imageUrl: "https://url-cdn.com/123ABC",
-                        pending: true,
-                        productUrl: "https://my-company.com/product-123ABC"
-                    }
-                ],
+                // lineItems: [
+                //     {
+                //         amount: "22.15",
+                //         label: "Item to be purchased",
+                //         id: "SKU-12345",
+                //         imageUrl: "https://url-cdn.com/123ABC",
+                //         pending: true,
+                //         productUrl: "https://my-company.com/product-123ABC"
+                //     }
+                // ],
                 taxLineItems: [
                     {
-                        label: "State Tax",
-                        amount: "8.95",
-                        pending: true
+                        label: "Tax",
+                        amount: packageObj?.tax_rate,
+                        pending: false
                     }
                 ],
-                discounts: [
-                    {
-                        label: "Holiday Discount",
-                        amount: "5.00",
-                        pending: true
-                    }
-                ],
+                // discounts: [
+                //     {
+                //         label: "Holiday Discount",
+                //         amount: "5.00",
+                //         pending: true
+                //     }
+                // ],
                 requestBillingContact: false,
                 requestShippingContact: false,
-                shippingOptions: [
-                    {
-                        label: "Next Day",
-                        amount: "15.69",
-                        id: "1"
-                    },
-                    {
-                        label: "Three Day",
-                        amount: "2.00",
-                        id: "2"
-                    }
-                ],
+                // shippingOptions: [
+                //     {
+                //         label: "Next Day",
+                //         amount: "15.69",
+                //         id: "1"
+                //     },
+                //     {
+                //         label: "Three Day",
+                //         amount: "2.00",
+                //         id: "2"
+                //     }
+                // ],
                 // pending is only required if it's true.
                 total: {
-                    amount: "41.79",
+                    amount: packageObj?.total_cost,
                     label: "Total",
                 },
             })}
@@ -89,11 +93,13 @@ function Payment(props) {
              * Identifies the location of the merchant that is taking the payment.
              * Obtained from the Square Application Dashboard - Locations tab.
              */
-            locationId="LYXPY974KKM25"
+            locationId={Config.locationId}
         >
             <ApplePay />
             <GooglePay />
-            <CreditCard />
+            <CreditCard>
+                <Button variant="primary" size="lg">Pay ${packageObj?.total_cost}</Button>
+            </CreditCard>
         </PaymentForm>
     )
 }
