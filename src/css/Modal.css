@@ -1,0 +1,43 @@
+.modal-enter {
+    transform: translateY(100%);
+  }
+  
+  .modal-enter-active {
+    transform: translateY(0%);
+    transition: transform 500ms ease-in-out;
+  }
+  
+  .modal-exit {
+    transform: translateY(0%);
+  }
+  
+  .modal-exit-active {
+    transform: translateY(100%);
+    transition: transform 500ms ease-in-out;
+  }
+  
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    padding-top: 40%;
+  }
+  
+  .modal-cover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  
+  .modal-content {
+    background-color: white;
+    padding: 20px;
+  }
+  
