@@ -1,13 +1,14 @@
 import * as React from 'react';
 import { ApplePay, GooglePay, CreditCard, PaymentForm} from 'react-square-web-payments-sdk';
 import { useNavigate } from 'react-router-dom';
+import { Spinner } from 'react-bootstrap';
 import Config from '../config/config';
 
 function Payment(props) {
 
     const packageObj = JSON.parse(sessionStorage.getItem('package'));
     const navigator = useNavigate();
-
+    const [loading, setLoading] = React.useState(false);
     return (
 
         <PaymentForm
@@ -22,6 +23,7 @@ function Payment(props) {
              */
             cardTokenizeResponseReceived={(token, buyer) => {
                 console.info({ token, buyer });
+                setLoading(false);
                 navigator('/success');
             }}
             /**
@@ -100,7 +102,11 @@ function Payment(props) {
             <ApplePay />
             <GooglePay className='mt-5' />
             <CreditCard className='mt-3'>
-                <div className='fs-2'>Pay ${packageObj?.total_cost}</div>
+                <div className='fs-2 p-2' onClick={()=>setLoading(true)} >
+                    {loading && <Spinner animation="border" variant="primary" />}
+                    Pay ${packageObj?.total_cost.toFixed(2)}
+                </div>
+
                 {/* <Button variant="primary" size="lg">Pay ${packageObj?.total_cost}</Button> */}
             </CreditCard>
         </PaymentForm>

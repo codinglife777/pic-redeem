@@ -42,7 +42,7 @@ function PackageList (props) {
                         <LazyImage imgSrc={imgInfo?.imgUrl} />
                     }
                 </Card>
-                <div className="list-container flex-1" style={{overflow:"scroll"}}>
+                <div className="list-container flex-1 p-2" style={{overflow:"scroll"}}>
                     <ListGroup>
                         {packageList.map((item, index)=> {
                             if (index === 0) {

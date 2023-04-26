@@ -80,7 +80,7 @@ function RedeemConfirmation (props) {
                     </div>
                 </CSSTransition>
                 <div className="text-center mt-5">
-                    <Button variant="warning" className="col-12 fs-1 mt-5 mb-3 text-white">Discounted Prints</Button>
+                    <Button variant="warning" className="col-12 fs-1 mt-5 mb-3 text-white" onClick={()=>setShowModal(true)}>Discounted Prints</Button>
                     <Button variant="primary" className="col-12 fs-1 mt-4" onClick={handleDownload}>Download Image</Button>
                     <Button variant="primary" className="col-12 fs-1 mt-4" onClick={()=>{
                         //To-do redirect

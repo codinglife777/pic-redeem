@@ -21,7 +21,7 @@ function Success (props) {
     };
 
     const packageObj = JSON.parse(sessionStorage.getItem('package'));
-
+    console.log(packageObj);
     return (
         <Container className="p-5">    
             <Row className="justify-content-md-center">
@@ -29,7 +29,7 @@ function Success (props) {
                     <h2>Payment Successful</h2>
                     <GiCheckMark size="60" color="green" />
                 </div>
-                <p className="fs-4 text-warning">{packageObj?.delivery_method === "pickup" ? packageObj?.pick_detail : packageObj?.ship_detail}</p>
+                <p className="fs-4 text-warning mt-4 text-center">{packageObj?.delivery_method === "pickup" ? packageObj?.pickup_detail : packageObj?.ship_detail}</p>
                 <div className="text-center mt-5">
                     {!imgInfo?.watermark && <Button variant="primary" className="col-12 fs-1 mt-4" onClick={handleDownload}>Download Image</Button>}
                     <Button variant="primary" className="col-12 fs-1 mt-4" onClick={()=>{

@@ -43,7 +43,7 @@ function ConfirmImage (props) {
             <Card.Body>
                 <div className="button-container d-flex justify-content-between mt-2 p-3">
                     <Button variant="primary" className="mr-2 btn-lg" onClick={()=>{
-                        navigator('/redeem-confirm');
+                        watermark ? navigator('/package-list') : navigator('/redeem-confirm');
                     }}>Yes</Button>
                     <Button variant="danger" className="btn-lg" onClick={()=>{
                         navigator('/enter-code');

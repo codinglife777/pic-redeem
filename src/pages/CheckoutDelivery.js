@@ -135,11 +135,11 @@ function CheckoutDelivery (props) {
                     <hr />
                     <div className="d-flex flex-row justify-content-between align-items-center">
                         <p>Subtotal</p>
-                        <p>${subTotal}</p>
+                        <p>${subTotal.toFixed(2)}</p>
                     </div>
                     <div className="d-flex flex-row justify-content-between align-items-center">
                         <p>Shipping</p>
-                        <p>${testParks[0]['ship_cost']}</p>
+                        <p>{shipTo ? '$' + testParks[0]['ship_cost'] : 'free'}</p>
                     </div>
                     <div className="d-flex flex-row justify-content-between align-items-center">
                         <p>Tax</p>
@@ -148,7 +148,7 @@ function CheckoutDelivery (props) {
                     <hr />
                     <div className="d-flex flex-row justify-content-between align-items-center">
                         <p><strong>Total</strong></p>
-                        <p><strong>${subTotal + testParks[0]['tax_rate'] + testParks[0]['ship_cost']}</strong></p>
+                        <p><strong>${(subTotal + testParks[0]['tax_rate'] + testParks[0]['ship_cost']).toFixed(2)}</strong></p>
                     </div>
                 </div>
                 <p className="text-primary text-center" onClick={()=>navigator(-1)}>Back to Packages</p>

@@ -34,18 +34,18 @@ function PackageItem(props) {
     return (
         <Row>
             <Col xs={6} className="border border-secondary d-flex justify-content-center align-items-center">
-                <strong>{props.name}</strong>
+                <strong style={{fontFamily:"Helvetica Neue"}}>{props.name}</strong>
             </Col>
             <Col xs={6}>
                 <Row>
-                    <p className="text-end fs-3 text-warning">
-                        ${props.price}
+                    <p className="text-end fs-3 text-warning pe-4">
+                        ${props.price * quantity}
                     </p>
                 </Row>
                 <Row className="d-flex justify-content-center align-items-center">
-                    <Col xs={4} onClick={()=>{changeQuantity(false)}}><FaMinus /></Col>
-                    <Col xs={4}><p className="fs-4">{quantity}</p></Col>
-                    <Col xs={4} onClick={()=>{changeQuantity(true)}}><FaPlus /></Col>
+                    <Col xs={4} onClick={()=>{changeQuantity(false)}}><FaMinus color="#0dcaf0" /></Col>
+                    <Col xs={4}><p className="fs-3 text-primary"><strong>{quantity}</strong></p></Col>
+                    <Col xs={4} onClick={()=>{changeQuantity(true)}}><div className="text-center" style={{border:"1px solid #ffc107",borderRadius:"16px"}}><FaPlus color="#0d6efd" /></div></Col>
                 </Row>
             </Col>
         </Row>
