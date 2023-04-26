@@ -9,6 +9,8 @@ import WATERMAK_IMAGES from "../images";
 import { testParks } from "../utils/test_data";
 
 import '../css/Modal.css';
+import Watermark from "../components/Watermark";
+import LazyImage from "../components/LazyImage";
 
 function RedeemConfirmation (props) {
 
@@ -58,15 +60,11 @@ function RedeemConfirmation (props) {
                             <Card className="image-card mt-4">
                                 <Card.Title className="text-center p-3">Would you like to view special print offerings available only today?</Card.Title>
                                 {imgInfo?.watermark ?
-                                    <div style={{height:"65vw"}}>
-                                        <Card.Img variant="top" className="p-2 position-fixed" style={{width:"82%"}} src={imgInfo?.imgUrl} alt={props.imageAlt} />
-                                        <Card.Img variant="top" className="p-2 position-fixed" style={{width:"82%"}} src={WATERMAK_IMAGES[testParks[0]['rides'][0]['watermark']]} alt={props.imageAlt} />
-                                    </div>
-                                : 
-                                <Card.Img variant="top" className="p-2" src={imgInfo?.imgUrl} alt={props.imageAlt} />
+                                    <Watermark imgHeight="65vw" imgUrl={imgInfo?.imgUrl} imgWatermark={WATERMAK_IMAGES[testParks[0]['rides'][0]['watermark']]} />
+                                    : 
+                                    <LazyImage imgSrc={imgInfo?.imgUrl} />
                                 }
                                 
-                                {/* <Card.Img variant="top" className="p-2" src={imgInfo?.imgUrl} alt={props.imageAlt} /> */}
                                 <Card.Body>
                                     <div className="button-container d-flex justify-content-between mt-2 p-3">
                                         <Button variant="primary" className="mr-2 btn-lg" onClick={()=>{

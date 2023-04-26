@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import PackageItem from "../components/PackageItem";
 import { testParks } from "../utils/test_data";
 import WATERMAK_IMAGES from "../images";
+import Watermark from "../components/Watermark";
+import LazyImage from "../components/LazyImage";
 
 function PackageList (props) {
     const {imgInfo} = useContext(ImageContext);
@@ -35,12 +37,9 @@ function PackageList (props) {
                 <Card className="image-card">
                     <Card.Title className="text-center p-3 fs-1">Packages</Card.Title>
                     {imgInfo?.watermark ?
-                        <div style={{height:"70vw"}}>
-                            <Card.Img variant="top" className="p-2 position-fixed" style={{width:"93%"}} src={imgInfo?.imgUrl} alt={props.imageAlt} />
-                            <Card.Img variant="top" className="p-2 position-fixed" style={{width:"93%"}} src={WATERMAK_IMAGES[testParks[0]['rides'][0]['watermark']]} alt={props.imageAlt} />
-                        </div>
-                    : 
-                        <Card.Img variant="top" className="p-2" src={imgInfo?.imgUrl} alt={props.imageAlt} />
+                        <Watermark imgHeight="70vw" imgUrl={imgInfo?.imgUrl} imgWatermark={WATERMAK_IMAGES[testParks[0]['rides'][0]['watermark']]} />
+                        : 
+                        <LazyImage imgSrc={imgInfo?.imgUrl} />
                     }
                 </Card>
                 <div className="list-container flex-1" style={{overflow:"scroll"}}>

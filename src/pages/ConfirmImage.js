@@ -1,12 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
 
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { Card, Button } from 'react-bootstrap';
+import { Card, Button, Spinner } from 'react-bootstrap';
 import { ImageContext } from '../ImageProvider';
 import { retrieveSignedUrl } from "../utils/http_helpers";
 import { testParks, testRetrieveUrl } from "../utils/test_data";
+import LazyImage from "../components/LazyImage";
 import WATERMAK_IMAGES from "../images";
 import '../css/Watermark.css';
+import Watermark from "../components/Watermark";
 
 function ConfirmImage (props) {
 
@@ -32,13 +34,11 @@ function ConfirmImage (props) {
     return (
         <Card className="image-card">
             <Card.Title className="text-center p-3">Please Confirm This Is Your Image</Card.Title>
-            {watermark ?
-                <div style={{height:"90vw"}}>
-                    <Card.Img variant="top" className="p-2 position-fixed" src={imgUrl} alt={props.imageAlt} />
-                    <Card.Img variant="top" className="p-2 position-fixed" src={WATERMAK_IMAGES[testParks[0]['rides'][0]['watermark']]} alt={props.imageAlt} />
-                </div>
-            : 
-            <Card.Img variant="top" className="p-2" src={imgUrl} alt={props.imageAlt} />
+            {
+                watermark ? 
+                <Watermark imgHeight="90vw" imgUrl={imgUrl} imgWatermark={WATERMAK_IMAGES[testParks[0]['rides'][0]['watermark']]} />
+                : 
+                <LazyImage imgSrc={imgUrl} />
             }
             <Card.Body>
                 <div className="button-container d-flex justify-content-between mt-2 p-3">
