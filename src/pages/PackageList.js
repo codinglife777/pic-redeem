@@ -33,7 +33,7 @@ function PackageList (props) {
 
     return (
        <Container className="">
-            <div className="d-flex flex-column vh-100">
+            <div className="d-flex flex-column vh-100 pt-3">
                 <Card className="image-card">
                     <Card.Title className="text-center p-3 fs-1">Packages</Card.Title>
                     {imgInfo?.watermark ?
@@ -42,7 +42,7 @@ function PackageList (props) {
                         <LazyImage imgSrc={imgInfo?.imgUrl} />
                     }
                 </Card>
-                <div className="list-container flex-1 p-2" style={{overflow:"scroll"}}>
+                <div className="list-container flex-1 p-2 mt-5" style={{overflow:"scroll"}}>
                     <ListGroup>
                         {packageList.map((item, index)=> {
                             if (index === 0) {

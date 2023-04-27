@@ -43,9 +43,10 @@ function PackageItem(props) {
                     </p>
                 </Row>
                 <Row className="d-flex justify-content-center align-items-center">
-                    <Col xs={4} onClick={()=>{changeQuantity(false)}}><FaMinus color="#0dcaf0" /></Col>
-                    <Col xs={4}><p className="fs-3 text-primary"><strong>{quantity}</strong></p></Col>
-                    <Col xs={4} onClick={()=>{changeQuantity(true)}}><div className="text-center" style={{border:"1px solid #ffc107",borderRadius:"16px"}}><FaPlus color="#0d6efd" /></div></Col>
+                    <Col xs={2} />
+                    <Col xs={3} onClick={()=>{changeQuantity(false)}}><div className="text-center" style={{border:"1px solid #B8BBBE",borderRadius:"16px"}}><FaMinus color="#0dcaf0" /></div></Col>
+                    <Col xs={3}><p className="fs-3 text-primary text-center"><strong>{quantity}</strong></p></Col>
+                    <Col xs={3} onClick={()=>{changeQuantity(true)}}><div className="text-center" style={{border:"1px solid #ffc107",borderRadius:"16px"}}><FaPlus color="#0d6efd" /></div></Col>
                 </Row>
             </Col>
         </Row>

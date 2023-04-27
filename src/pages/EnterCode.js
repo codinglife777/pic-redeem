@@ -21,7 +21,7 @@ function EnterCode() {
         <Container className="vh-100">
             <div className="d-flex flex-column align-content-center align-items-center justify-content-center vh-100">
                 <p className="fs-2"><strong>Enter Your Image Code</strong></p>
-                <Form.Control type="number" value={code} className="fs-3" onChange={(e)=>setCode(e.target.value)} />
+                <Form.Control type="text" value={code} className="fs-3" onChange={(e)=>setCode(e.target.value)} />
                 <Button variant="primary" size="lg" xs="12" className="mt-5 xs-12" onClick={checkCode} disabled={!code}>
                     {loading && <Spinner animation="border" variant="info" />}
                     Submit

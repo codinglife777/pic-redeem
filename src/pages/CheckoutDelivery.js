@@ -54,6 +54,8 @@ function CheckoutDelivery (props) {
     checkedOutPackage.forEach(element => {
         subTotal += element?.price * element?.quantity;
     });
+    const total = (subTotal + testParks[0]['tax_rate'] + (shipTo?testParks[0]['ship_cost']:0)).toFixed(2);
+
     return (
        <Container className="">
             <div className="d-flex flex-column vh-100">
@@ -148,12 +150,12 @@ function CheckoutDelivery (props) {
                     <hr />
                     <div className="d-flex flex-row justify-content-between align-items-center">
                         <p><strong>Total</strong></p>
-                        <p><strong>${(subTotal + testParks[0]['tax_rate'] + testParks[0]['ship_cost']).toFixed(2)}</strong></p>
+                        <p><strong>${total}</strong></p>
                     </div>
                 </div>
                 <p className="text-primary text-center" onClick={()=>navigator(-1)}>Back to Packages</p>
                 <div>
-                    <Button variant="primary" className="col-12 fs-1 mt-5 mb-3 text-white" onClick={checkOut}>Pay Now</Button>
+                    <Button variant="primary" className="col-12 fs-1 mt-5 mb-3 text-white" onClick={checkOut} disabled={total <= 0}>Pay Now</Button>
                 </div>
             </div>
             <CSSTransition
