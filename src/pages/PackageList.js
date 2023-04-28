@@ -69,7 +69,7 @@ function PackageList (props) {
                         <LazyImage imgSrc={imgInfo?.imgUrl} />
                     }
                 </Card>
-                <div className="list-container flex-1 p-2 mt-3" style={{overflow:"scroll"}}>
+                <div className="list-container flex-1 p-2 mt-3" style={{overflow:"scroll",minHeight:"300px"}}>
                     <ListGroup>
                         {packageList.map((item, index)=> 
                              <ListGroupItem key={index}><PackageItem name={item['name']} price={item['price']} defaultVal={item['quantity']} setCheckBtnState={setCheckBtnState}/></ListGroupItem>
