@@ -14,18 +14,23 @@ function PackageList (props) {
     const navigator = useNavigate();
     const [packageList, setPackageList] = useState([]);
 
-     const originPackageList = imgInfo.watermark ? testParks[0]['sale_packages'] : testParks[0]['redeem_packages'];
+     const _originPackageList = imgInfo.watermark ? testParks[0]['sale_packages'] : testParks[0]['redeem_packages'];
+     const originPackageList = [];
+     for (let i = 0; i < _originPackageList.length; i++)
+        originPackageList[i] = {..._originPackageList[i]};
 
+    //  Object.assign(originPackageList, _originPackageList)
+    // console.log("AAA", originPackageList, _originPackageList);
     useEffect(() => {
         const checkedOutPackage = JSON.parse(sessionStorage.getItem('checkout-package')) || [];
         // console.log("CheckedOutPackage: ", checkedOutPackage);
         if (checkedOutPackage === null || checkedOutPackage.length === 0) {
             sessionStorage.setItem('checkout-package', JSON.stringify([]));
-            const _packageList = (imgInfo.watermark ? testParks[0]['sale_packages'] : testParks[0]['redeem_packages']).map((item, index) => {
+            const _packageList = originPackageList.map((item, index) => {
                 if (index === 0)
                     item['quantity'] = 1;
                 else
-                item['quantity'] = 0;
+                    item['quantity'] = 0;
                 return item;
             });
             // console.log("PackageList:", _packageList);
@@ -34,21 +39,27 @@ function PackageList (props) {
         }
         else 
         {
-            let _packageList = originPackageList;
-            if (checkedOutPackage.length < 1)
+            // console.log("OriginalPackageList: ", originPackageList);
+            let _packageList = [...originPackageList];
+            if (checkedOutPackage.length < 1) {
                 setCheckBtnState(false);
+            }
             else {
-                _packageList = originPackageList.map((item, index) => {
+                // console.log("CheckedOutPage: ", checkedOutPackage);
+                _packageList = _packageList.map((item, index) => {
+                    let isExist = false;
                     checkedOutPackage.forEach(element => {
                         if (item['name'] === element['name'] && item['price'] === element['price']) {
                             item['quantity'] = element['quantity'];
+                            isExist = true;
                         }
                     });
-
+                    if (!isExist) item['quantity'] = 0;
                     return item;
                 });
             }
 
+            // console.log("_packageList: ", _packageList, originPackageList);
             setPackageList(_packageList);
         }
     }, [imgInfo.watermark])
@@ -69,7 +80,7 @@ function PackageList (props) {
                         <LazyImage imgSrc={imgInfo?.imgUrl} />
                     }
                 </Card>
-                <div className="list-container flex-1 p-2 mt-3" style={{overflow:"scroll",minHeight:"300px"}}>
+                <div className="list-container flex-1 p-2 mt-3" style={{overflow:"scroll",minHeight:"200px"}}>
                     <ListGroup>
                         {packageList.map((item, index)=> 
                              <ListGroupItem key={index}><PackageItem name={item['name']} price={item['price']} defaultVal={item['quantity']} setCheckBtnState={setCheckBtnState}/></ListGroupItem>
