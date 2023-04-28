@@ -12,19 +12,46 @@ function PackageList (props) {
     const {imgInfo} = useContext(ImageContext);
     const [checkBtnState, setCheckBtnState] = useState(true);
     const navigator = useNavigate();
+    const [packageList, setPackageList] = useState([]);
 
-    const packageList = imgInfo.watermark ? testParks[0]['sale_packages'] : testParks[0]['redeem_packages'];
+     const originPackageList = imgInfo.watermark ? testParks[0]['sale_packages'] : testParks[0]['redeem_packages'];
 
     useEffect(() => {
-        const checkedOutPackage = JSON.parse(sessionStorage.getItem('checkout-package'));
-        if (checkedOutPackage === null)
+        const checkedOutPackage = JSON.parse(sessionStorage.getItem('checkout-package')) || [];
+        // console.log("CheckedOutPackage: ", checkedOutPackage);
+        if (checkedOutPackage === null || checkedOutPackage.length === 0) {
             sessionStorage.setItem('checkout-package', JSON.stringify([]));
+            const _packageList = (imgInfo.watermark ? testParks[0]['sale_packages'] : testParks[0]['redeem_packages']).map((item, index) => {
+                if (index === 0)
+                    item['quantity'] = 1;
+                else
+                item['quantity'] = 0;
+                return item;
+            });
+            // console.log("PackageList:", _packageList);
+            sessionStorage.setItem('checkout-package', JSON.stringify(_packageList));
+            setPackageList(_packageList);
+        }
         else 
         {
+            let _packageList = originPackageList;
             if (checkedOutPackage.length < 1)
                 setCheckBtnState(false);
+            else {
+                _packageList = originPackageList.map((item, index) => {
+                    checkedOutPackage.forEach(element => {
+                        if (item['name'] === element['name'] && item['price'] === element['price']) {
+                            item['quantity'] = element['quantity'];
+                        }
+                    });
+
+                    return item;
+                });
+            }
+
+            setPackageList(_packageList);
         }
-    }, [])
+    }, [imgInfo.watermark])
     
 
     function checkOut() {
@@ -44,29 +71,9 @@ function PackageList (props) {
                 </Card>
                 <div className="list-container flex-1 p-2 mt-3" style={{overflow:"scroll"}}>
                     <ListGroup>
-                        {packageList.map((item, index)=> {
-                            if (index === 0) {
-                                //save to session stroage
-                                const data = {name: item['name'], price: item['price'], quantity: 1};
-                                const checkedOutPackage = JSON.parse(sessionStorage.getItem('checkout-package'));
-                                let isExist = false;
-                                const newVal = checkedOutPackage ? checkedOutPackage.map((it, idx) =>{
-
-                                    if (item['name'] === it['name'] && item['price'] === it['price']) {
-                                        isExist = true;
-                                        if (it['quantity'] < 1) {
-                                            it['quantity'] = 1
-                                        }
-                                    }
-                                    return it;
-                                }) : [];
-                                if (!isExist) {
-                                    newVal.push(data);
-                                }
-                                sessionStorage.setItem('checkout-package', JSON.stringify(newVal));
-                            }
-                           return <ListGroupItem key={index}><PackageItem name={item['name']} price={item['price']} defaultVal={index === 0 ? 1 : 0} setCheckBtnState={setCheckBtnState}/></ListGroupItem>
-                        })}
+                        {packageList.map((item, index)=> 
+                             <ListGroupItem key={index}><PackageItem name={item['name']} price={item['price']} defaultVal={item['quantity']} setCheckBtnState={setCheckBtnState}/></ListGroupItem>
+                        )}
                     </ListGroup>
                 </div>
                 <div>

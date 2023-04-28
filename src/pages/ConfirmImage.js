@@ -19,6 +19,7 @@ function ConfirmImage (props) {
     const [watermark, setWatermark] = useState(false);
 
     useEffect(() => {
+        sessionStorage.setItem('checkout-package', JSON.stringify([]));
         retrieveSignedUrl(testRetrieveUrl).then((retrieveUrl)=>{
             setImgUrl(retrieveUrl);
             updateImgInfo({
