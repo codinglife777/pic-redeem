@@ -40,7 +40,7 @@ function CheckoutDelivery (props) {
         packageObj['delivery_method'] = pickUp ? 'pickup' : 'ship';
         packageObj['ship_info'] = shipInfo;
         packageObj['shipping'] = testParks[0]['ship_cost'];
-        packageObj['total_cost'] = subTotal + testParks[0]['tax_rate'] + testParks[0]['ship_cost'];
+        packageObj['total_cost'] = subTotal + testParks[0]['tax_rate'] + shipTo ? testParks[0]['ship_cost'] : 0;
         packageObj['tax_rate'] = testParks[0]['tax_rate'];
         packageObj['pickup_detail'] = testParks[0]['pickup_detail'];
         packageObj['ship_detail'] = testParks[0]['ship_detail'];

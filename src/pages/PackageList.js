@@ -19,11 +19,8 @@ function PackageList (props) {
      for (let i = 0; i < _originPackageList.length; i++)
         originPackageList[i] = {..._originPackageList[i]};
 
-    //  Object.assign(originPackageList, _originPackageList)
-    // console.log("AAA", originPackageList, _originPackageList);
     useEffect(() => {
         const checkedOutPackage = JSON.parse(sessionStorage.getItem('checkout-package')) || [];
-        // console.log("CheckedOutPackage: ", checkedOutPackage);
         if (checkedOutPackage === null || checkedOutPackage.length === 0) {
             sessionStorage.setItem('checkout-package', JSON.stringify([]));
             const _packageList = originPackageList.map((item, index) => {
@@ -33,19 +30,16 @@ function PackageList (props) {
                     item['quantity'] = 0;
                 return item;
             });
-            // console.log("PackageList:", _packageList);
             sessionStorage.setItem('checkout-package', JSON.stringify(_packageList));
             setPackageList(_packageList);
         }
         else 
         {
-            // console.log("OriginalPackageList: ", originPackageList);
             let _packageList = [...originPackageList];
             if (checkedOutPackage.length < 1) {
                 setCheckBtnState(false);
             }
             else {
-                // console.log("CheckedOutPage: ", checkedOutPackage);
                 _packageList = _packageList.map((item, index) => {
                     let isExist = false;
                     checkedOutPackage.forEach(element => {
@@ -59,7 +53,6 @@ function PackageList (props) {
                 });
             }
 
-            // console.log("_packageList: ", _packageList, originPackageList);
             setPackageList(_packageList);
         }
     }, [imgInfo.watermark])

@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { Card, Button, Spinner } from 'react-bootstrap';
+import { Card, Button } from 'react-bootstrap';
 import { ImageContext } from '../ImageProvider';
 import { retrieveSignedUrl } from "../utils/http_helpers";
 import { testParks, testRetrieveUrl } from "../utils/test_data";
